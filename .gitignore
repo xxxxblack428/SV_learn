@@ -1,0 +1,8 @@
+DVEfiles/
+csrc/
+*.daidir/
+*.vpd
+simv
+ucli.key
+session*.tcl
+.restartSimSession.tcl.old
