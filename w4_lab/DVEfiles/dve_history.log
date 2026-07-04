@@ -1,0 +1,75 @@
+# Preference setting overrides
+gui_set_pref_value -category {Globals} -key {app_default_font} -value {Bitstream Charter,14,-1,5,50,0,0,0,0,0}
+gui_set_pref_value -category {Globals} -key {app_fixed_width_font} -value {Courier 10 Pitch,14,-1,5,50,0,0,0,0,0}
+gui_create_pref_key -category {Globals} -key {load_detail_for_funcov} -value_type {bool} -value {false}
+gui_set_pref_value -category {Source} -key {value_annotate} -value {true}
+gui_create_pref_category -category {dlg_settings}
+gui_create_pref_key -category {dlg_settings} -key {tableWithImmediatePopup} -value_type {bool} -value {true}
+
+# State setting overrides
+gui_state_default_create -off -ini
+gui_set_state_value -category Globals -key recent_sessions -value {{gui_load_session -ignore_errors -file /home/icstudy/study_project/sv_labs/aut22/w4_lab/session.inter.vpd.tcl} {gui_load_session -ignore_errors -file /home/icstudy/study_project/sv_labs/aut22/w3_lab/session.inter.vpd.tcl}}
+gui_set_state_value -category Globals -key recent_tcl_scripts -value {{gui_dve_source -global /home/icstudy/study_project/sv_labs/aut22/w4_lab/session.inter.vpd.tcl} {gui_dve_source -global /home/icstudy/study_project/sv_labs/aut22/w5_lab/session.inter.vpd.tcl}}
+gui_set_state_value -category Layout -key child_console_size_x -value 2557
+gui_set_state_value -category Layout -key child_console_size_y -value 175
+gui_set_state_value -category Layout -key child_data_coltype -value 144
+gui_set_state_value -category Layout -key child_data_colvalue -value 139
+gui_set_state_value -category Layout -key child_data_colvariable -value 181
+gui_set_state_value -category Layout -key child_data_size_x -value 466
+gui_set_state_value -category Layout -key child_data_size_y -value 1224
+gui_set_state_value -category Layout -key child_hier_col3 -value {-1}
+gui_set_state_value -category Layout -key child_hier_colhier -value 206
+gui_set_state_value -category Layout -key child_hier_colpd -value 0
+gui_set_state_value -category Layout -key child_hier_coltype -value 136
+gui_set_state_value -category Layout -key child_hier_size_x -value 345
+gui_set_state_value -category Layout -key child_hier_size_y -value 1224
+gui_set_state_value -category Layout -key child_source_docknewline -value false
+gui_set_state_value -category Layout -key child_source_pos_x -value {-2}
+gui_set_state_value -category Layout -key child_source_pos_y -value {-23}
+gui_set_state_value -category Layout -key child_source_size_x -value 1749
+gui_set_state_value -category Layout -key child_source_size_y -value 1220
+gui_set_state_value -category Layout -key child_wave_colname -value 373
+gui_set_state_value -category Layout -key child_wave_colvalue -value 365
+gui_set_state_value -category Layout -key child_wave_left -value 742
+gui_set_state_value -category Layout -key child_wave_right -value 1810
+gui_set_state_value -category Layout -key main_pos_x -value 0
+gui_set_state_value -category Layout -key main_pos_y -value 65
+gui_set_state_value -category Layout -key main_size_x -value 2557
+gui_set_state_value -category Layout -key main_size_y -value 1393
+gui_set_state_value -category Layout -key stand_source_child_pos_x -value {-2}
+gui_set_state_value -category Layout -key stand_source_child_pos_y -value {-15}
+gui_set_state_value -category Layout -key stand_source_child_size_x -value 1743
+gui_set_state_value -category Layout -key stand_source_child_size_y -value 1064
+gui_set_state_value -category Layout -key stand_wave_child_docknewline -value false
+gui_set_state_value -category Layout -key stand_wave_child_pos_x -value {-2}
+gui_set_state_value -category Layout -key stand_wave_child_pos_y -value {-23}
+gui_set_state_value -category Layout -key stand_wave_child_size_x -value 2562
+gui_set_state_value -category Layout -key stand_wave_child_size_y -value 1220
+gui_set_state_value -category Layout -key stand_wave_top_pos_x -value 60
+gui_set_state_value -category Layout -key stand_wave_top_pos_y -value 103
+gui_set_state_value -category Layout -key stand_wave_top_size_x -value 2617
+gui_set_state_value -category Layout -key stand_wave_top_size_y -value 1431
+gui_create_state_key -category FindDialog -key m_pMatchCase -value_type bool -value false
+gui_create_state_key -category FindDialog -key m_pMatchWord -value_type bool -value false
+gui_create_state_key -category FindDialog -key m_pUseCombo -value_type string -value {}
+gui_create_state_key -category FindDialog -key m_pWrapAround -value_type bool -value true
+gui_state_default_create -off
+
+# Begin command logging
+gui_set_pref_value -category {Globals} -key {smart_resize} -value {false}
+gui_set_pref_value -category {Globals} -key {smart_resize} -value {true}
+gui_sim_run Ucli -exe ./simv -args {-ucligui  } -dir .
+gui_src_expand -id { Source.1 } -fid  0  -line 1
+gui_dve_source -global /home/icstudy/study_project/sv_labs/aut22/w4_lab/session.inter.vpd.tcl
+gui_set_pref_value -category {Source} -key {value_annotate} -value {false}
+gui_set_pref_value -category {Source} -key {value_annotate} -value {true}
+restart
+gui_sim_restart
+gui_set_pref_value -category {Source} -key {value_annotate} -value {false}
+gui_set_pref_value -category {Source} -key {value_annotate} -value {true}
+run 1us
+gui_list_expand -id  Wave.1   {tb.dut.din[15:0]}
+gui_list_select -id Wave.1 -selected  { {tb.dut.din[0]}   }
+gui_list_select -id Wave.1 -selected  { {tb.dut.din[0]}  {tb.dut.din[3]}   }
+gui_close_window -window Wave.1
+gui_close_window -window TopLevel.2

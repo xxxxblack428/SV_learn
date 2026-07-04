@@ -1,0 +1,59 @@
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Jun 30 13:07 2026
+VCD+ Writer O-2018.09-SP2_Full64 Copyright (c) 1991-2018 by Synopsys Inc.
+The file '/home/icstudy/study_project/sv_labs/aut22/w3_lab/inter.vpd' was opened successfully.
+dve> dump -add
+Error: dump -add
+Error: [UCLI-001] Flag value missing or incorrect
+Flag '-add' has an invalid value of "null".
+Value must be scope/signal name list.
+Please enter 'dump -help' for more details.
+dve> dump -add /*
+1
+dve> run 500ns
+500000 ps
+With selected criteria, DVE has found 'no results'.
+Warning: [DVWW010] 
+Seek hit end of values with no more matches.
+With selected criteria, DVE has found 'no results'.
+Warning: [DVWW009] 
+Seek hit time zero with no more matches.
+With selected criteria, DVE has found 'results at time 45000
+    tb.dut.clock'.
+With selected criteria, DVE has found 'results at time 85000
+    tb.dut.clock'.
+With selected criteria, DVE has found 'results at time 125000
+    tb.dut.clock'.
+With selected criteria, DVE has found 'results at time 155000
+    tb.dut.clock'.
+With selected criteria, DVE has found 'results at time 195000
+    tb.dut.clock'.
+0
+0
+Error: [EK-CMD-009]
+value 'No message selected.' for option '-msgid' not of type 'integer'.
+Error: [EK-CMD-009]
+value 'No message selected.' for option '-msgid' not of type 'integer'.
+Error: [EK-CMD-009]
+value 'No message selected.' for option '-msgid' not of type 'integer'.
+Error: [EK-CMD-009]
+value 'No message selected.' for option '-msgid' not of type 'integer'.
+Error: [EK-CMD-009]
+value 'No message selected.' for option '-msgid' not of type 'integer'.
+Error: [EK-CMD-009]
+value 'No message selected.' for option '-msgid' not of type 'integer'.
+dve> restart
+Chronologic VCS simulator copyright 1991-2018
+Contains Synopsys proprietary information.
+Compiler version O-2018.09-SP2_Full64; Runtime version O-2018.09-SP2_Full64;  Jun 30 14:25 2026
+VCD+ Writer O-2018.09-SP2_Full64 Copyright (c) 1991-2018 by Synopsys Inc.
+The file '/home/icstudy/study_project/sv_labs/aut22/w3_lab/inter.vpd' was opened successfully.
+dve> dump -add /*
+2
+dve> run 500ns
+500000 ps
+           V C S   S i m u l a t i o n   R e p o r t 
+Time: 500000 ps
+CPU Time:      0.900 seconds;       Data structure size:   0.1Mb
+Tue Jun 30 23:36:46 2026
