@@ -117,7 +117,7 @@ module rt_stimulator(
     intf.din[saddr]<=1'b0;
     intf.valid_n[saddr]<=1'b1;
     intf.frame_n[saddr]<=1'b1;
-    $display ("@%0t: [DRV] src_chinal[%0d] & dest_chinal[%0d] date_trans_finished ",$time,saddr,daddr);
+    $display ("@%0t: [DRV] src_chinal[%0d] & dest_chinal[%0d] date trans [%0p] finished ",$time,saddr,daddr,data);
   endtask
 endmodule
 
@@ -136,13 +136,77 @@ module rt_generate;
   //generate packets
   function void gen_pkts();
   endfunction
-
 endmodule 
 
-module rt_test_top;
+module rt_monitor(
+  rt_interface intf
+);
+  rt_packet_t in_pkts[16][$];
+  rt_packet_t out_pkts[16][$];
 
+  initial begin : mon_chnl_in_proc
+    foreach(in_pkts[i]) begin
+      automatic int chid = i;
+      fork
+        mon_chnl_in(chid);
+        mon_chnl_out(chid);
+      join_none
+    end
+  end
+
+  task automatic mon_chnl_in(bit[3:0] id);
+    rt_packet_t pkt;
+    forever begin
+      //clear content for the same struct variable
+    pkt.data.delete();
+    pkt.src = id;
+    // monitor specific channl_in data and put it into the queue
+    // monitor address phase
+    @(negedge intf.frame_n[id]);
+    $display ("@%0t: [MON] CH_IN src_chinal[%0d] & dest_chinal[%0d] date_trans_started ",$time,pkt.src,pkt.dst);
+    for(int i=0; i<4; i++) begin
+      @(negedge intf.clock);
+      pkt.dst[i] = intf.din[id];
+    end
+    //pass pad phase
+    repeat(5) @(negedge intf.clock);
+    do begin
+     pkt.data = new[pkt.data.size + 1] (pkt.data);
+      for (int i=0; i<8; i++) begin
+        @(negedge intf.clock);
+        pkt.data[pkt.data.size-1][i] = intf.din[id];
+      end
+    end while(!intf.frame_n[id]);
+    in_pkts[id].push_back(pkt);
+    $display ("@%0t: [MON] CH_IN src_chinal[%0d] & dest_chinal[%0d] date_trans[%0p]finished ",$time,pkt.src,pkt.dst,pkt.data);
+  end
+  endtask
+
+  task automatic mon_chnl_out(bit[3:0] id);
+    rt_packet_t pkt;
+    forever begin
+      pkt.data.delete();
+      pkt.src = 0;
+      pkt.dst = id;
+      @(negedge intf.frameo_n[id]);
+    $display ("@%0t: [MON] CH_OUT  dest_chinal[%0d] date_trans_started ",$time,pkt.dst);
+      do begin
+       pkt.data = new[pkt.data.size + 1] (pkt.data);
+        for (int i=0; i<8; i++) begin
+          @(negedge intf.clock iff !intf.valido_n[id] );
+          pkt.data[pkt.data.size-1][i] = intf.dout[id];
+        end
+      end while(!intf.frameo_n[id]);
+      out_pkts[id].push_back(pkt);
+    $display ("@%0t: [MON] CH_OUT dest_chinal[%0d] date_trans[%0p]finished ",$time,pkt.dst,pkt.data);
+    // monitor specific channl_out data and put it into the queue
+  end
+  endtask
+  
 endmodule
 
+module rt_test_top;
+endmodule
 
 module tb;
 
@@ -181,6 +245,8 @@ module tb;
    assign intf.clock = clk;
    
    rt_stimulator inst1(intf);
+
+   rt_monitor mon (intf);
 
    rt_generate gen();
 
